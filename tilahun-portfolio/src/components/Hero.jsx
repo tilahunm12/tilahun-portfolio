@@ -1,6 +1,9 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 
+// ✅ Helper to always load from the correct base path (works on GitHub Pages)
+const getImageUrl = (fileName) => `${import.meta.env.BASE_URL}${fileName}`
+
 const Hero = () => {
   return (
     <section id="home" className="hero-section">
@@ -21,7 +24,8 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 1 }}
           >
-            Passionate Software Developer — I design and build clean, interactive, and modern web experiences using React, Java, and C++.
+            Passionate Software Developer — I design and build clean,
+            interactive, and modern web experiences using React, Java, and C++.
           </motion.p>
 
           <motion.a
@@ -43,12 +47,10 @@ const Hero = () => {
           transition={{ delay: 0.8, duration: 1 }}
         >
           <motion.img
-            src="/heroImg.png"
+            src={getImageUrl('heroImg.png')}   // ✅ works in dev & GitHub Pages
             alt="Tilahun Misikir"
             className="profile-img"
-            animate={{
-              y: [0, -10, 0], // floating motion
-            }}
+            animate={{ y: [0, -10, 0] }}       // floating motion
             transition={{
               repeat: Infinity,
               duration: 4,
@@ -56,6 +58,7 @@ const Hero = () => {
             }}
           />
         </motion.div>
+
       </div>
     </section>
   )
