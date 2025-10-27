@@ -1,0 +1,16 @@
+# Enforce consistent line endings in the repository
+# Treat text files as text and normalize to LF in the repository
+* text=auto eol=lf
+
+# Mark common binary formats so Git won't attempt EOL normalization on them
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.zip binary
+*.gz binary
+*.br binary
+
+# Ensure shell scripts keep LF (useful on CI)
+*.sh text eol=lf

@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 
-// ✅ Helper to always load from the correct base path (works on GitHub Pages)
+// Helper to always load from the correct base path (works on GitHub Pages)
 const getImageUrl = (fileName) => `${import.meta.env.BASE_URL}${fileName}`
 
 const Hero = () => {
@@ -28,15 +28,9 @@ const Hero = () => {
             interactive, and modern web experiences using React, Java, and C++.
           </motion.p>
 
-          <motion.a
-            href="#projects"
-            className="btn btn-primary"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 1 }}
-          >
-            View My Work
-          </motion.a>
+          <div className="hero-buttons">
+            <a href="#projects" className="btn btn-primary">View My Work</a>
+          </div>
         </div>
 
         {/* Animated circular profile image */}
@@ -47,10 +41,14 @@ const Hero = () => {
           transition={{ delay: 0.8, duration: 1 }}
         >
           <motion.img
-            src={getImageUrl('heroImg.png')}   // ✅ works in dev & GitHub Pages
-            alt="Tilahun Misikir"
+            src={getImageUrl('heroImg.png')}
+            alt="Portrait of Tilahun Misikir — Software Developer"
             className="profile-img"
-            animate={{ y: [0, -10, 0] }}       // floating motion
+            loading="lazy"
+            decoding="async"
+            width="560"
+            height="560"
+            animate={{ y: [0, -10, 0] }}
             transition={{
               repeat: Infinity,
               duration: 4,

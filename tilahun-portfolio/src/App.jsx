@@ -15,7 +15,7 @@ const App = () => {
     <ThemeProvider>
       <div>
         <Navbar />
-        <main>
+        <main id="main">
           <Hero />
           <About />
           <Projects />

@@ -3,11 +3,17 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Modal from './Modal'
 import { FaBuilding, FaShoppingCart, FaHome, FaGithub, FaExclamationCircle } from 'react-icons/fa'
+// Image imports - add the PNG files to `src/assets/` with these names:
+// hotel.png, supermarket.png, realestate.png
+// If the files don't exist yet the app will fall back to the icon-only view.
+import hotelPreview from '../assets/Hotel.png'
+import supermarketPreview from '../assets/Supermarket.png'
+import realestatePreview from '../assets/Realestate.png'
 
 const localProjects = [
-  { id: 'hotel', title: 'Hotel Reservation System', tech: ['Java'], category: 'Java', icon: <FaBuilding />, desc: 'Java app for hotel management.', repoUrl: 'https://github.com/tilahunm12/hotel-reservation', liveUrl: 'https://tilahunm12.github.io/hotel-reservation-demo' },
-  { id: 'supermarket', title: 'Supermarket Management', tech: ['C++', 'SQL'], category: 'C++', icon: <FaShoppingCart />, desc: 'C++ app for inventory and sales.', repoUrl: 'https://github.com/tilahunm12/supermarket-management', liveUrl: 'https://tilahunm12.github.io/supermarket-demo' },
-  { id: 'realestate', title: 'Real Estate System', tech: ['C++'], category: 'C++', icon: <FaHome />, desc: 'Property management software.', repoUrl: 'https://github.com/tilahunm12/real-estate-system', liveUrl: 'https://tilahunm12.github.io/realestate-demo' }
+  { id: 'hotel', title: 'Hotel Reservation System', tech: ['Java'], category: 'Java', icon: <FaBuilding />, desc: 'Java app for hotel management.', repoUrl: 'https://github.com/tilahunm12/hotel-reservation', liveUrl: 'https://tilahunm12.github.io/hotel-reservation-demo', preview: hotelPreview },
+  { id: 'supermarket', title: 'Supermarket Management', tech: ['C++', 'SQL'], category: 'C++', icon: <FaShoppingCart />, desc: 'C++ app for inventory and sales.', repoUrl: 'https://github.com/tilahunm12/supermarket-management', liveUrl: 'https://tilahunm12.github.io/supermarket-demo', preview: supermarketPreview },
+  { id: 'realestate', title: 'Real Estate System', tech: ['C++'], category: 'C++', icon: <FaHome />, desc: 'Property management software.', repoUrl: 'https://github.com/tilahunm12/real-estate-system', liveUrl: 'https://tilahunm12.github.io/realestate-demo', preview: realestatePreview }
 ]
 
 const Projects = () => {
@@ -25,7 +31,6 @@ const Projects = () => {
 
   useEffect(() => {
     if (filter === 'GitHub') loadRepos(page)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter, page])
 
   const loadRepos = async (pageNum) => {
@@ -79,8 +84,28 @@ const Projects = () => {
         <motion.div layout className="projects-grid" variants={containerVariants} initial="hidden" animate="visible">
           <AnimatePresence>
             {filteredProjects.map(p => (
-              <motion.div key={p.id} layout className="project-card" onClick={() => setModalData(p)} variants={childVariants} whileHover={{ scale: 1.04, translateY: -8 }} whileTap={{ scale: 0.992 }}>
-                <div className="project-image">{p.icon}</div>
+              <motion.div
+                key={p.id}
+                layout
+                className="project-card"
+                onClick={() => setModalData(p)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setModalData(p); } }}
+                role="button"
+                tabIndex={0}
+                variants={childVariants}
+                whileHover={{ scale: 1.04, translateY: -8 }}
+                whileTap={{ scale: 0.992 }}
+              >
+                <div
+                  className={`project-image ${p.preview ? 'has-bg' : ''}`}
+                  role="img"
+                  aria-label={`${p.title} icon`}
+                  style={p.preview ? { backgroundImage: `url(${p.preview})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
+                >
+                  {/* Keep the icon accessible/visible if the image isn't present or as an overlay */}
+                  <span className="icon" aria-hidden="true">{p.icon}</span>
+                  <span className="sr-only">{p.title} icon</span>
+                </div>
                 <div className="project-info">
                   <h3>{p.title}</h3>
                   <p>{p.desc}</p>
@@ -92,7 +117,17 @@ const Projects = () => {
                 </div>
 
                 <motion.div className="project-overlay" variants={overlayVariants} initial="rest" whileHover="hover">
-                  {p.preview && <img src={p.preview} alt={`${p.title} preview`} className="preview-gif" />}
+                  {p.preview && (
+                    <img
+                      src={p.preview}
+                      alt={`${p.title} preview`}
+                      className="preview-gif"
+                      loading="lazy"
+                      decoding="async"
+                      width="600"
+                      height="120"
+                    />
+                  )}
                   <div className="overlay-actions">
                     <button className="btn btn-primary" onClick={e => { e.stopPropagation(); setModalData(p) }}>Quick View</button>
                   </div>                                                                                                                                                                              
