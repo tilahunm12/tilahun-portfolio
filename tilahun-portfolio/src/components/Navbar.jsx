@@ -1,8 +1,6 @@
 
 // src/components/Navbar.jsx (updated)
 import React, { useState, useEffect, useContext } from 'react'
-import tilahunLogo from '../assets/tilahun_logo.svg'
-import tilahunLogo2x from '../assets/tilahun_logo@2x.png'
 import { Link } from 'react-scroll'
 import { FaBars, FaTimes, FaMoon, FaSun, FaGithub, FaLinkedin, FaFilePdf } from 'react-icons/fa'
 import { ThemeContext } from '../context/ThemeContext'
@@ -25,8 +23,7 @@ const Navbar = () => {
       <nav className="nav-container">
         <div className="logo">
           <img
-            src={tilahunLogo}
-            srcSet={`${tilahunLogo} 1x, ${tilahunLogo2x} 2x`}
+            src={import.meta.env.BASE_URL + 'tilahun_logo.svg'}
             alt="Tilahun Misikir logo"
             className="logo-img"
             width={40}

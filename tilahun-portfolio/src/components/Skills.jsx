@@ -27,7 +27,12 @@ const Skills = () => {
   }, [])
 
   return (
-    <section id="skills" className="skills">
+    <section
+      id="skills"
+      className="skills"
+      // public/ image renamed to lowercase 'skill.png' for consistency and portability
+      style={{ backgroundImage: `url(${import.meta.env.BASE_URL}skill.png)` }}
+    >
       <div className="container">
         <motion.h2 className="section-title" initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }}>Skills</motion.h2>
         <div className="skills-grid" ref={ref}>
