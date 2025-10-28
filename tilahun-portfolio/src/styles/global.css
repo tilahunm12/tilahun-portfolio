@@ -328,9 +328,20 @@ body {
 
 /* About */
 .about {
-  background: var(--bg);
-  color: var(--text);
+  /* modern, subtle gradient that is theme-aware via color choices */
   padding: 6rem 0;
+  color: var(--text);
+  background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(139,92,246,0.04));
+  /* soft separation from surrounding content */
+  border-top: 1px solid rgba(0,0,0,0.03);
+  border-bottom: 1px solid rgba(0,0,0,0.03);
+}
+
+/* Dark-mode override: keep the section subtle and readable */
+[data-theme='dark'] .about {
+  background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-top: 1px solid rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.02);
 }
 
 .about-text p {
