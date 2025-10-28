@@ -26,8 +26,8 @@ const Navbar = () => {
             src={import.meta.env.BASE_URL + 'tilahun_logo.svg'}
             alt="Tilahun Misikir logo"
             className="logo-img"
-            width={40}
-            height={40}
+            width={50}
+            height={50}
           />
           <span className="brand-text">Tilahun Misikir</span>
         </div>

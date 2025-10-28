@@ -111,8 +111,54 @@ const Projects = () => {
                   <p>{p.desc}</p>
                   <div className="project-tech">{p.tech.map(t => <span key={t}>{t}</span>)}</div>
                   <div className="project-links" style={{ marginTop: '0.75rem', display: 'flex', gap: '0.5rem' }}>
-                    {p.liveUrl && <a href={p.liveUrl} target="_blank" rel="noreferrer" className="btn btn-secondary" onClick={e => e.stopPropagation()}>Live</a>}
-                    {p.repoUrl && <a href={p.repoUrl} target="_blank" rel="noreferrer" className="btn btn-primary" onClick={e => e.stopPropagation()}>Source</a>}
+                    {p.id === 'hotel' ? (
+                      <a
+                        href={`${import.meta.env.BASE_URL}hotel.pdf`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn btn-primary"
+                        onClick={e => e.stopPropagation()}
+                      >
+                        View More
+                      </a>
+                    ) : p.id === 'supermarket' ? (
+                      <>
+                        <a
+                          href={`${import.meta.env.BASE_URL}supermarket.pdf`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="btn btn-primary"
+                          onClick={e => e.stopPropagation()}
+                        >
+                          View More
+                        </a>
+                        <a
+                          href={`${import.meta.env.BASE_URL}database.pdf`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="btn btn-secondary"
+                          style={{ marginLeft: '0.5rem' }}
+                          onClick={e => e.stopPropagation()}
+                        >
+                          Database
+                        </a>
+                      </>
+                    ) : p.id === 'realestate' ? (
+                      <a
+                        href={`${import.meta.env.BASE_URL}realestate.pdf`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn btn-primary"
+                        onClick={e => e.stopPropagation()}
+                      >
+                        View More
+                      </a>
+                    ) : (
+                      <>
+                        {p.liveUrl && <a href={p.liveUrl} target="_blank" rel="noreferrer" className="btn btn-secondary" onClick={e => e.stopPropagation()}>Live</a>}
+                        {p.repoUrl && <a href={p.repoUrl} target="_blank" rel="noreferrer" className="btn btn-primary" onClick={e => e.stopPropagation()}>Source</a>}
+                      </>
+                    )}
                   </div>
                 </div>
 

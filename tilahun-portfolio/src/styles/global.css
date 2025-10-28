@@ -103,7 +103,8 @@ body {
   width: 40px;
   height: 40px;
   display: inline-block;
-  border-radius: 10px;
+  border-radius: 50%; /* make logo circular */
+  border: 2px solid rgba(255,255,255,0.18);
   object-fit: cover;
   box-shadow: 0 6px 18px rgba(59,130,246,0.14);
 }
@@ -351,7 +352,9 @@ body {
 /* Projects */
 .projects {
   padding: 6rem 0;
-  background: #fefefe;
+  /* Use theme-aware background so dark mode doesn't show a bright panel behind dark text */
+  background: var(--surface);
+  color: var(--text);
 }
 
 .filter-buttons {
