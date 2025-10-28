@@ -36,9 +36,8 @@ const Hero = () => {
               className="btn btn-secondary"
               target="_blank"
               rel="noreferrer"
-              download
             >
-              Download Résumé
+              View My Resume
             </a>
           </div>
         </div>
