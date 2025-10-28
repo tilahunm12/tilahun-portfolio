@@ -3,10 +3,9 @@ import React, { useState } from 'react'
 import { FaEnvelope, FaPhone, FaLinkedin, FaFacebook, FaClipboard, FaCalendarAlt } from 'react-icons/fa'
 
 const Contact = () => {
-  const [status, setStatus] = useState('')
+  const [status, setStatus] = useState(null) // Changed to object: { type: 'success' | 'error', message: string }
 
   const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID || ''
-  const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL || 'https://calendly.com/yourname'
 
   const handleSubmit = async (e) => {
     // If a Formspree ID is configured, handle via JS fetch so we can show inline feedback.
@@ -26,25 +25,53 @@ const Contact = () => {
       })
 
       if (res.ok) {
-        setStatus("Thanks — I'll get back to you soon!")
+        setStatus({ type: 'success', message: "Thanks — I'll get back to you soon!" })
         e.target.reset()
       } else {
-        setStatus('Oops — something went wrong. Try emailing me directly at ')
+        setStatus({ type: 'error', message: 'Oops — something went wrong. Try emailing me directly:' })
       }
     } catch (e) {
-      void e
-      setStatus('Network error — try emailing me at ')
+      setStatus({ type: 'error', message: 'Network error — try emailing me directly:' })
     }
   }
 
   const copyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText('tilahunm569@gmail.com')
-      setStatus('Email copied to clipboard — paste it into your mail client.')
-    } catch (e) {
-      void e
-      setStatus('Could not copy email. Please use the link to open your mail client.')
+    const email = 'tilahunm569@gmail.com'
+    if (navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(email)
+        setStatus({ type: 'success', message: 'Email copied to clipboard — paste it into your mail client.' })
+        return
+      } catch (err) {
+        // Fallback below
+      }
     }
+    // Fallback: Create temp input
+    const textArea = document.createElement('textarea')
+    textArea.value = email
+    document.body.appendChild(textArea)
+    textArea.focus()
+    textArea.select()
+    try {
+      document.execCommand('copy')
+      setStatus({ type: 'success', message: 'Email copied to clipboard — paste it into your mail client.' })
+    } catch (err) {
+      setStatus({ type: 'error', message: 'Could not copy email. Please use the link to open your mail client.' })
+    }
+    document.body.removeChild(textArea)
+  }
+
+  const renderStatus = () => {
+    if (!status) return null
+    const isError = status.type === 'error'
+    return (
+      <p className="form-status" role="status">
+        {status.message}{' '}
+        {isError && (
+          <a href="mailto:tilahunm569@gmail.com" className="contact-link">Email me</a>
+        )}
+      </p>
+    )
   }
 
   return (
@@ -68,32 +95,48 @@ const Contact = () => {
 
             <div className="contact-item">
               <FaLinkedin aria-hidden="true" />
-              <p><a href="https://www.linkedin.com/feed/" target="_blank" rel="noreferrer" className="contact-link" title="LinkedIn">LinkedIn</a></p>
+              <p>
+                <a 
+                  href="https://www.linkedin.com/in" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="contact-link" 
+                  title="LinkedIn"
+                  aria-label="My LinkedIn profile"
+                >
+                  LinkedIn
+                </a>
+              </p>
             </div>
 
             <div className="contact-item">
               <FaFacebook aria-hidden="true" />
-              <p><a href="https://web.facebook.com/" target="_blank" rel="noreferrer" className="contact-link" title="Facebook">Facebook</a></p>
-            </div>
-
-            <div className="contact-item">
-              <FaCalendarAlt aria-hidden="true" />
-              <p><a href={CALENDLY_URL} target="_blank" rel="noreferrer" className="contact-link" title="Schedule a call">Schedule a call</a></p>
+              <p>
+                <a 
+                  href="https://www.facebook.com" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="contact-link" 
+                  title="Facebook"
+                  aria-label="My Facebook profile"
+                >
+                  Facebook
+                </a>
+              </p>
             </div>
           </div>
-
           <form
             className="contact-form"
             onSubmit={handleSubmit}
             aria-live="polite"
             name="contact"
-            method={FORMSPREE_ID ? 'POST' : 'POST'}
+            method="POST"
             data-netlify={FORMSPREE_ID ? undefined : 'true'}
-            data-netlify-honeypot="bot-field"
           >
             {/* Netlify: required hidden inputs for static form handling */}
             {!FORMSPREE_ID && <input type="hidden" name="form-name" value="contact" />}
-            {!FORMSPREE_ID && <input type="hidden" name="bot-field" />}
+            {/* Honeypot: improved for better bot detection */}
+            <input type="text" name="bot-field" className="honeypot" style={{ display: 'none' }} />
             <label className="sr-only" htmlFor="name">Name</label>
             <input id="name" name="name" type="text" placeholder="Your Name" required />
 
@@ -104,7 +147,7 @@ const Contact = () => {
             <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
 
             <button type="submit" className="btn btn-primary">Send Message</button>
-            {status && <p className="form-status" role="status">{status} {status && (<a href="mailto:tilahunm569@gmail.com" className="contact-link">Email me</a>)}</p>}
+            {renderStatus()}
           </form>
         </div>
       </div>
