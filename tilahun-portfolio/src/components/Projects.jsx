@@ -1,11 +1,7 @@
-// clean single-file implementation with subtle animations
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Modal from './Modal'
-import { FaBuilding, FaShoppingCart, FaHome, FaGithub, FaExclamationCircle } from 'react-icons/fa'
-// Image imports - add the PNG files to `src/assets/` with these names:
-// hotel.png, supermarket.png, realestate.png
-// If the files don't exist yet the app will fall back to the icon-only view.
+import { FaBuilding, FaShoppingCart, FaHome, FaExclamationCircle } from 'react-icons/fa'
 import hotelPreview from '../assets/Hotel.png'
 import supermarketPreview from '../assets/Supermarket.png'
 import realestatePreview from '../assets/Realestate.png'
@@ -20,40 +16,10 @@ const Projects = () => {
   const [projects] = useState(localProjects)
   const [filter, setFilter] = useState('All')
   const [modalData, setModalData] = useState(null)
-  const [repos, setRepos] = useState([])
-  const [page, setPage] = useState(1)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const [hasMore, setHasMore] = useState(true)
 
-  const GITHUB_USERNAME = 'TilahunMisikir'
-  const PER_PAGE = 6
+  const categories = ['All', 'Java', 'C++']
 
-  useEffect(() => {
-    if (filter === 'GitHub') loadRepos(page)
-  }, [filter, page])
-
-  const loadRepos = async (pageNum) => {
-    setLoading(true)
-    setError(null)
-    try {
-      const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=${PER_PAGE}&page=${pageNum}`)
-      if (!res.ok) throw new Error('Failed to fetch repositories')
-      const data = await res.json()
-      if (data.length < PER_PAGE) setHasMore(false)
-      setRepos(prev => [...prev, ...data])
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleViewMore = () => setPage(prev => prev + 1)
-
-  const categories = ['All', 'Java', 'C++', 'Web', 'GitHub']
-
-  const filteredProjects = filter === 'All' ? projects : filter === 'GitHub' ? [] : projects.filter(p => p.category === filter)
+  const filteredProjects = filter === 'All' ? projects : projects.filter(p => p.category === filter)
 
   const overlayVariants = {
     rest: { opacity: 0, y: 10, pointerEvents: 'none' },
@@ -77,7 +43,7 @@ const Projects = () => {
 
         <div className="filter-buttons">
           {categories.map(cat => (
-            <button key={cat} className={`filter-btn ${filter === cat ? 'active' : ''}`} onClick={() => { setFilter(cat); setRepos([]); setPage(1); setHasMore(true) }}>{cat}</button>
+            <button key={cat} className={`filter-btn ${filter === cat ? 'active' : ''}`} onClick={() => { setFilter(cat) }}>{cat}</button>
           ))}
         </div>
 
@@ -180,27 +146,6 @@ const Projects = () => {
                 </motion.div>
               </motion.div>
             ))}
-
-            {filter === 'GitHub' && (
-              <>
-                {loading && <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="loading-spinner"><div className="spinner" /><p>Fetching your latest GitHub repositories...</p></motion.div>}
-                {error && <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="error-message"><FaExclamationCircle /> <span>{error}</span></motion.div>}
-
-                {!loading && !error && repos.map(repo => (
-                  <motion.div key={repo.id} className="project-card github-card" variants={childVariants} whileHover={{ scale: 1.04, translateY: -8 }}>
-                    <div className="project-image"><FaGithub /></div>
-                    <div className="project-info">
-                      <h3>{repo.name}</h3>
-                      <p>{repo.description || 'No description available.'}</p>
-                      <a href={repo.html_url} target="_blank" rel="noreferrer" className="btn btn-primary">View Repo</a>
-                    </div>
-                  </motion.div>
-                ))}
-
-                {!loading && !error && hasMore && <div className="view-more"><button className="btn btn-secondary" onClick={handleViewMore}>View More Projects</button></div>}
-                {!hasMore && filter === 'GitHub' && repos.length > 0 && <p className="end-message">🎉 You've reached the end!</p>}
-              </>
-            )}
           </AnimatePresence>
         </motion.div>
       </div>

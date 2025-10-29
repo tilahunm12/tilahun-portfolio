@@ -1,6 +1,6 @@
 // src/components/Contact.jsx
 import React, { useState } from 'react'
-import { FaEnvelope, FaPhone, FaLinkedin, FaFacebook, FaClipboard, FaCalendarAlt } from 'react-icons/fa'
+import { FaEnvelope, FaPhone, FaLinkedin, FaFacebook, FaClipboard, FaGithub } from 'react-icons/fa'
 
 const Contact = () => {
   const [status, setStatus] = useState(null) // Changed to object: { type: 'success' | 'error', message: string }
@@ -123,6 +123,21 @@ const Contact = () => {
                   Facebook
                 </a>
               </p>
+            </div>
+            <div className="contact-item">
+            <FaGithub aria-hidden="true" />
+            <p>
+              <a 
+                href="https://github.com/tilahunm12" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="contact-link" 
+                title="GitHub"
+                aria-label="My GitHub profile"
+                >
+                GitHub
+              </a>
+            </p>
             </div>
           </div>
           <form
