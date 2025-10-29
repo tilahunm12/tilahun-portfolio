@@ -1,4 +1,4 @@
-// src/context/ThemeContext.jsx
+
 import React, { createContext, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 

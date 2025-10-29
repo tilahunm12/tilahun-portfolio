@@ -1,4 +1,4 @@
-// src/components/Skills.jsx
+
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 

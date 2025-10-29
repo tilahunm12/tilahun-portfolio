@@ -1,4 +1,3 @@
-// src/components/Contact.jsx
 import React, { useState } from 'react'
 import { FaEnvelope, FaPhone, FaLinkedin, FaFacebook, FaClipboard, FaGithub } from 'react-icons/fa'
 

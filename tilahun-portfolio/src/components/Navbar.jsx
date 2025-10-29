@@ -1,5 +1,4 @@
 
-// src/components/Navbar.jsx (updated)
 import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-scroll'
 import { FaBars, FaTimes, FaMoon, FaSun, FaGithub, FaLinkedin, FaFilePdf } from 'react-icons/fa'
@@ -31,7 +30,6 @@ const Navbar = () => {
           />
           <span className="brand-text">Tilahun Misikir</span>
         </div>
-        {/* header-actions removed: GitHub, LinkedIn and resume icons intentionally hidden */}
         <ul className={open ? 'nav-menu active' : 'nav-menu'}>
           {['home','about','projects','skills','contact'].map(section => (
             <li key={section} className="nav-item">

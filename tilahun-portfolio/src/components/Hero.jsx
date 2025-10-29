@@ -30,7 +30,6 @@ const Hero = () => {
 
           <div className="hero-buttons">
             <a href="#projects" className="btn btn-primary">View My Work</a>
-            {/* Resume download - served from public/tilahun_resume.pdf */}
             <a
               href={getImageUrl('tilahun_resume.pdf')}
               className="btn btn-secondary"

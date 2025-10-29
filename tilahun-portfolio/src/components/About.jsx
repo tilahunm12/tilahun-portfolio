@@ -1,4 +1,3 @@
-// src/components/About.jsx
 import React from 'react'
 import { motion } from 'framer-motion'
 
@@ -13,8 +12,8 @@ const About = () => {
             <p>I've developed hands-on projects in hotel reservation systems, supermarket management, and real estate listings, honing my abilities in object-oriented design, data persistence, and user-centric applications. Outside of coding, I enjoy contributing to group projects and staying updated with emerging technologies.</p>
             <div className="about-stats">
               <div className="stat"><h3>3+</h3><p>Years in CS</p></div>
-              <div className="stat"><h3>5+</h3><p>Projects</p></div>
-              <div className="stat"><h3>Java, C++, SQL</h3><p>Core Skills</p></div>
+              <div className="stat"><h3>4+</h3><p>Projects</p></div>
+              <div className="stat"><h4>Java, C++, SQL<br/>HTML, CSS, Javascript</h4><p>Core Skills</p></div>
             </div>
           </div>
         </motion.div>
