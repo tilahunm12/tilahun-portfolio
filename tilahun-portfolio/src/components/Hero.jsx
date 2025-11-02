@@ -26,6 +26,7 @@ const Hero = () => {
           >
             Passionate Software Developer — I design and build clean,
             interactive, and modern web experiences using React, Java, and C++.
+
           </motion.p>
 
           <div className="hero-buttons">
